@@ -1,27 +1,25 @@
 import fastfy from 'fastify'
-import { PrismaClient } from '@prisma/client'
-import { z } from 'zod'
+import cookie from '@fastify/cookie'
+import { createPoll } from './routes/create-poll'
+import { getPoll } from './routes/get-poll'
+import { voteOnPoll } from './routes/vote-on-poll'
+import 'dotenv/config'
 
 const app = fastfy()
 
-const prisma = new PrismaClient()
+app.register(cookie, {
+  secret: process.env.COOCKIE_SECRET,
+  hook: 'onRequest'
+})
 
-app.post('/polls', async (request, reply) => {
-  const createPollBody = z.object({
-    title: z.string()
-  })
+app.register(createPoll)
+app.register(getPoll)
+app.register(voteOnPoll)
 
-  const { title } =  createPollBody.parse(request.body)
-
-  const newPoll = await prisma.poll.create({
-    data: {
-      title,
-    }
-  })
-
-  return reply.status(201).send({ pollId: newPoll.id }) 
+app.get('/', () => {
+  return { message: "Hello World!" }
 })
 
 app.listen({ port: 3333 }).then(() => {
-  console.log("HTTP server running!")
+  console.log("HTTP server is running!")
 })
