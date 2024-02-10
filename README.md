@@ -3,9 +3,9 @@ API for a polling system, with real-time ranking via websocket
 
 ## Technologies and Libraries used:
 - Node (https://nodejs.org/en);
-- Fastify (https://fastify.dev/);
-- Prisma (https://www.prisma.io/);
-- Zod (https://www.prisma.io/);
+- Fastify Framework (https://fastify.dev/);
+- Prisma ORM (https://www.prisma.io/);
+- Zod - for validation (https://zod.dev/);
 - PostgreSQL (https://www.postgresql.org/);
 - Redis (https://redis.io/);
 - Docker (https://www.docker.com/).
