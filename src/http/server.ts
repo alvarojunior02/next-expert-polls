@@ -1,9 +1,11 @@
 import fastfy from 'fastify'
 import cookie from '@fastify/cookie'
+import websocket from '@fastify/websocket'
 import { createPoll } from './routes/create-poll'
 import { getPoll } from './routes/get-poll'
 import { voteOnPoll } from './routes/vote-on-poll'
 import 'dotenv/config'
+import { pollResults } from './ws/poll-results'
 
 const app = fastfy()
 
@@ -12,14 +14,17 @@ app.register(cookie, {
   hook: 'onRequest'
 })
 
+app.register(websocket)
+
+// HTTP Routes
 app.register(createPoll)
 app.register(getPoll)
 app.register(voteOnPoll)
 
-app.get('/', () => {
-  return { message: "Hello World!" }
-})
+// WebSocket Routes
+app.register(pollResults)
 
+// Run Server
 app.listen({ port: 3333 }).then(() => {
-  console.log("HTTP server is running!")
+  console.log("Server is running!")
 })
