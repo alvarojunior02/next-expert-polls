@@ -23,7 +23,7 @@ Install PostgreSQL and Redis on your own real machine.
 ```
 cd nlw-expert-polls
 ```
-Configure the '.env' file white '.env.example'
+Configure the '.env' file whith '.env.example'
 ```
 npm install
 ```
